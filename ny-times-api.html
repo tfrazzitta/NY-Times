@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset ="utf-8">
+		<title>Giffy Project</title>
+		<link href="https://fonts.googleapis.com/css?family=Architects+Daughter|Mogra" rel="stylesheet">
+		<style type="text/css">
+		
+		.boxes{
+			font-weight: bold;
+			font-family: "nyt-cheltenham",georgia,"times new roman",times,serif;\
+			font-weight:bold;
+			text-decoration: underline;
+			
+
+		}
+
+		.Snip{
+			font-style: italic;
+
+			
+		}
+		.shade{
+			border:1px solid black;
+		}
+				</style>
+		<!--CSS link here-->
+	</head>
+	<body>
+		<h1>Ny Times</h1>
+		<div id="giffy-favs"></div>
+		<form id="giffy-frame">
+			<label value="" for="giffy-frame"> Search </label>
+			<input type="text" id="gif-search-box"><br>
+
+			<label for="giffy-frame"> Start Year (YYYYMMDD) </label>
+			<input type="text" id="start-year-box"><br>
+
+			<label for="giffy-frame"> End Year (YYYYMMDD) </label>
+			<input type="text" id="end-year-box"><br>
+
+			<input id="add-gif" type="submit" value="Add to favorites">
+		</form>
+		<div id="gif-list"></div>
+		
+
+
+	</body>
+	
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	 <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<!--<script>
+       
+
+										
+
+
+var favorites=["donald trump","NASA"];
+	var art="";
+ 	var SearchTerm= "Trump";
+//var NumRecordSelect ="";
+	var StartYear ="20050101";
+ 	var EndYear= "20170101";
+ 	console.log(this);
+
+ 	var url = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q=";
+    var apikey = "&Api-keyd329e990eef24226acd6113127986902";
+   
+ 
+CreateButtons();
+	function CreateButtons(){
+		$("#giffy-favs").empty();
+		for(i=0;i<favorites.length;i++){
+		var b= $("<button>");
+		b.addClass("gifs")
+ 			b.attr("data-info", favorites[i]);
+ 			b.text(favorites[i]);
+ 			console.log(b);
+			$("#giffy-favs").append(b)
+		
+		}
+
+ }
+
+
+function Search(){
+$("#gif-list").html("")
+var name = $(this).attr('data-info');
+console.log(name);
+var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+url += '?' + $.param({
+  'api-key': "d329e990eef24226acd6113127986902",
+  'q': name,
+  'begin_date': StartYear,
+  'end_date': EndYear
+});
+$.ajax({
+  url: url,
+  method: 'GET',
+}).done(function(result) {
+	var articles=result.response.docs;
+	for(i=0;i<articles.length;i++){
+		// var t= articles[i].web_url.substring(4);
+		// var p= "https" + t;
+		var c = $("<div>");
+			c.attr(articles[i].lead_paragraph);
+			c.text(articles[i].lead_paragraph)
+			c.addClass("boxes")
+		// var d = $("<div>");
+		// 	d.attr(articles[i].snippet);
+		// 	d.text(articles[i].snippet)	
+		 	c.append(d)
+		var d = $("<a href= " + articles[i].web_url + "> Read More<href>");
+			//var d = $("<a>");
+			//d.attr("href",articles[i].web_url);
+
+			//d.text(articles[i].web_url)	
+			//c.append(d)
+
+		// var d = $("h1")
+		// 	d.attr(articles[i].web_url
+
+		// c.append(d)
+	  		// $("#gif-list").text(JSON.stringify(result));
+	  		 $("#gif-list").append(c);
+	  		//console.log(result)
+	  		 console.log(d)
+ }
+
+}).fail(function(err) {
+  throw err;
+});
+
+}
+
+ 
+
+
+
+$("#add-gif").on("click", function(event) {
+ 			event.preventDefault();
+		    var x = $("#gif-search-box").val().trim();
+			favorites.push(x);
+ 			 CreateButtons();
+
+ 			});
+
+
+
+$(document).on("click",".gifs",Search);
+
+
+
+
+
+	</script>-->
+
+
+	<script>
+
+
+
+var bike=[];
+
+
+
+$("#add-gif").on("click",function(event){
+event.preventDefault();
+var a= $("#gif-search-box").val();
+var b = $("#start-year-box").val();
+var c = $("#end-year-box").val();
+bike.push(a,b,c);
+console.log(a,b,c)
+console.log(bike)
+ Compiler();
+ })
+
+
+
+function Compiler(){
+var search =bike[0];
+var StartYear= bike[1]
+var EndYear = bike[0]
+console.log(search)
+
+//var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?d329e990eef24226acd6113127986902" +search;
+var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+url += '?' + $.param({
+  'api-key': "d329e990eef24226acd6113127986902",
+  'q': search,
+  //'begin_date': StartYear,
+ // 'end_date': EndYear
+});
+$.ajax({
+  url: url,
+  method: 'GET',
+}).done(function(result) {
+	var articles=result.response.docs;
+	for(i=0;i<articles.length;i++){
+		// var t= articles[i].web_url.substring(4);
+		// var p= "https" + t;
+		var q = $("<div>");
+			q.addClass("shade");
+
+		var c = $("<div>");
+			c.addClass("boxes");
+			c.attr(articles[i].headline.main);
+			c.text(articles[i].headline.main)
+			
+
+		var e= $("<p>")	
+			e.attr(articles[i].snippet);
+			e.text(articles[i].snippet)
+			e.addClass("Snip")
+			
+			q.append(c)
+			q.append(e)
+			//c.append(e)
+			q.append(d)
+		// var d = $("<div>");
+		// 	d.attr(articles[i].snippet);
+		// 	d.text(articles[i].snippet)	
+		 	//c.append(d)
+		var d = $("<a href= " + articles[i].web_url + "> Read More<href>");
+
+		 $("#gif-list").append(q);
+			//var d = $("<a>");
+			//d.attr("href",articles[i].web_url);
+
+			//d.text(articles[i].web_url)	
+			//c.append(d)
+
+		// var d = $("h1")
+		// 	d.attr(articles[i].web_url
+
+		// c.append(d)
+	  		// $("#gif-list").text(JSON.stringify(result));
+	  		// $("#gif-list").append(c);
+	  		 // $("#gif-list").append(e);
+	  		//console.log(result)
+	  		 console.log(d)
+ }
+
+}).fail(function(err) {
+  throw err;
+});
+
+}
+
+ 
+	</script>
